@@ -11,39 +11,43 @@ Product.init(
   {
     // Define the columns for the Product model
     id: {
-      type: DataTypes.INTEGER,       // Column type is INTEGER
-      allowNull: false,              // This column cannot be null
-      primaryKey: true,              // This column is the primary key
-      autoIncrement: true,           // Automatically increment this column
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      primaryKey: true,
+      autoIncrement: true,
     },
     product_name: {
-      type: DataTypes.STRING,        // Column type is STRING
-      allowNull: false,              // This column cannot be null
+      type: DataTypes.STRING,
+      allowNull: false,
     },
     price: {
       type: DataTypes.DECIMAL(10, 2), // Column type is DECIMAL with 10 digits total and 2 decimal places
-      allowNull: false,              // This column cannot be null
+      allowNull: false,
+      validate: {
+        isDecimal: true, // Was missing the validation for isDecimal that was specified in the instructions
+      },
     },
     stock: {
-      type: DataTypes.INTEGER,       // Column type is INTEGER
-      allowNull: false,              // This column cannot be null
-      defaultValue: 0,               // Default value for this column
+      type: DataTypes.INTEGER,
+      allowNull: false,
+      defaultValue: 10, // Default value is 10
     },
     category_id: {
-      type: DataTypes.INTEGER,       // Column type is INTEGER
+      type: DataTypes.INTEGER,
       references: {
-        model: 'category',           // This column references the 'category' model
-        key: 'id',                   // The foreign key refers to the 'id' column in the 'category' model
+        model: 'category',
+        key: 'id',
+        unique: false, // Not sure if it's necessary to specify unique: false here but I did
       },
     },
   },
   {
-    sequelize,                      // Pass the sequelize instance to the model
-    timestamps: false,              // Do not add timestamp fields (createdAt, updatedAt)
-    freezeTableName: true,          // Use the table name as is, do not pluralize it
-    underscored: true,              // Use snake_case for column names
-    modelName: 'product',           // Define the model name as 'product'
+    sequelize, // Pass the sequelize instance to the model
+    timestamps: false, // Do not add timestamp fields (createdAt, updatedAt)
+    freezeTableName: true, // Use the table name as is, do not pluralize it
+    underscored: true, // Use snake_case for column names
+    modelName: 'product', // Define the model name as 'product'
   }
 );
 
-module.exports = Product;            // Export the Product model for use in other parts of the application
+module.exports = Product; // Export the Product model for use in other parts of the application

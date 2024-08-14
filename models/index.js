@@ -8,28 +8,26 @@ const ProductTag = require('./ProductTag');
 
 // A Product belongs to a Category
 Product.belongsTo(Category, {
-  foreignKey: 'category_id', // Foreign key in the Product table
-  onDelete: 'SET NULL',      // When the referenced Category is deleted, set category_id to null in Product
+  foreignKey: 'category_id',
+  onDelete: 'SET NULL',
 });
 
 // A Category has many Products
 Category.hasMany(Product, {
-  foreignKey: 'category_id', // Foreign key in the Product table
-  onDelete: 'SET NULL',      // When the referenced Category is deleted, set category_id to null in Product
+  foreignKey: 'category_id',
+  onDelete: 'SET NULL',
 });
 
 // A Product belongs to many Tags through ProductTag
+// Found this in the Sequelize documentation: https://sequelize.org/master/manual/assocs.html#many-to-many-relationships
 Product.belongsToMany(Tag, {
-  through: ProductTag,        // Join table for many-to-many relationship
-  foreignKey: 'product_id',   // Foreign key in the ProductTag table
-  otherKey: 'tag_id',         // Foreign key in the ProductTag table that references Tag
+  through: { model: ProductTag },
 });
 
 // A Tag belongs to many Products through ProductTag
+// Found this in the Sequelize documentation: https://sequelize.org/master/manual/assocs.html#many-to-many-relationships
 Tag.belongsToMany(Product, {
-  through: ProductTag,        // Join table for many-to-many relationship
-  foreignKey: 'tag_id',       // Foreign key in the ProductTag table
-  otherKey: 'product_id',     // Foreign key in the ProductTag table that references Product
+  through: { model: ProductTag },
 });
 
 module.exports = {

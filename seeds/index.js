@@ -1,26 +1,26 @@
-const { Category } = require('../models'); // Import the Category model from the models directory
+const seedCategories = require('./category-seeds');
+const seedProducts = require('./product-seeds');
+const seedTags = require('./tag-seeds');
+const seedProductTags = require('./product-tag-seeds');
 
-// Define an array of category data to be seeded into the database
-const categoryData = [
-  {
-    category_name: 'Shirts', // Category entry for 'Shirts'
-  },
-  {
-    category_name: 'Shorts', // Category entry for 'Shorts'
-  },
-  {
-    category_name: 'Music', // Category entry for 'Music'
-  },
-  {
-    category_name: 'Hats', // Category entry for 'Hats'
-  },
-  {
-    category_name: 'Shoes', // Category entry for 'Shoes'
-  },
-];
+const sequelize = require('../config/connection');
 
-// Function to seed categories into the database
-const seedCategories = () => Category.bulkCreate(categoryData);
+const seedAll = async () => {
+  await sequelize.sync({ force: true });
+  console.log('\n----- DATABASE SYNCED -----\n');
+  await seedCategories();
+  console.log('\n----- CATEGORIES SEEDED -----\n');
 
-// Export the seedCategories function for use in other modules, such as seeding scripts
-module.exports = seedCategories;
+  await seedProducts();
+  console.log('\n----- PRODUCTS SEEDED -----\n');
+
+  await seedTags();
+  console.log('\n----- TAGS SEEDED -----\n');
+
+  await seedProductTags();
+  console.log('\n----- PRODUCT TAGS SEEDED -----\n');
+
+  process.exit(0);
+};
+
+seedAll();
