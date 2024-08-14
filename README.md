@@ -7,6 +7,10 @@
 
 This project is a back-end e-commerce application that manages product categories, products, and tags using Sequelize ORM and PostgreSQL. It provides RESTful API endpoints for CRUD (Create, Read, Update, Delete) operations, enabling efficient handling of product data and its relationships. With Express.js for routing and Sequelize for database management, the project offers a scalable and organized solution for integrating with a front-end system, streamlining inventory management, and maintaining a robust e-commerce platform.
 
+## Video Demo
+
+Watch a demo of the project [here](https://drive.google.com/file/d/1N27-mW0FfRMlpRSPtM5gh1b5rCozKn3G/view)
+
 ## Table of Contents
 
 - [Installation](#installation)
